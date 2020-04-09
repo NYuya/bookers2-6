@@ -1,18 +1,16 @@
 
 <div class="row">
 	<div class="col-xs-3">
-
 		<h2>User info</h2>
 		<%= render 'users/profile', user: @book.user %>
 
+
 		<h2>New book</h2>
 		<%= render 'books/newform', book: @newbook %>
-
 	</div>
 
 	<div class="col-xs-9">
 		<h2>Book detail</h2>
-
 		<table class="table">
 			<tr>
 				<td>
@@ -47,41 +45,14 @@
 			</tr>
 		</table>
 		<ol>
-		    <% @book.book_comments.each do |book_comment| %>
-		        <li class="comment">
-		            <div class="comment-body bb">
-		                <div class="comment-avatar">
-
-		                </div>
-		                <div class="comment-text">
-		                    <div class="comment-author clearfix">
-		                        <a href="#" class="link-author"><%= book_comment.user.name %></a>
-		                        <span class="comment-meta">
-		                          <span class="comment-date"><%= book_comment.created_at.strftime('%Y/%m/%d') %></span>
-		                        </span>
-		                    </div>
-		                    <div class="comment-entry"><%= book_comment.comment %></div>
-
-								<% if book_comment.user == current_user %>
-								  <%= link_to "削除", book_book_comments_path(@book, book_comment_id: book_comment.id), method: :delete %>
-								<% end %>
-
-		                </div>
-		            </div>
-		        </li>
-		    <% end %>
+		    <%= render 'book_comments/book_comment_index' %>
 		</ol>
 
-		<!-- <form class="mt-20"> -->
-		<%= form_for [@book, @book_comment] do |f| %>
-		    <div class="row">
-		        <div class="col-sm-12">
-		            <%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "コメントをここに" %>
-		        </div>
-		    </div>
-		    <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
-		<% end %>
-		<!-- </form> -->
+		<!--<giv id="favorites_buttons_<%= @book.id %>">-->
+			<%= render 'book_comments/book_comment_form' %>
+
+
+		</giv>
 	</div>
 </div>
 
