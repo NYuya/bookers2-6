@@ -1,0 +1,45 @@
+
+
+<div class="col-xs-12">
+
+  <h2>Follow Users</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>image</th>
+          <th>name</th>
+          <th>follows</th>
+          <th>followers</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <th><%= attachment_image_tag(user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %></th>
+            <th><%= user.name %></th>
+            <th><%= user.followed.count %></th>
+            <th><%= user.follower.count %></th>
+            <th>
+              <% unless current_user == user %>
+                <% if current_user.following?(user) %>
+                  <%= form_for(current_user.relationships.find_by(follow_id: user.id), html: { method: :delete }) do |f| %>
+                    <%= hidden_field_tag :follow_id, user.id %>
+                    <%= f.submit 'Unfollow', class: 'btn btn-danger btn-block' %>
+                  <% end %>
+                <% else %>
+                  <%= form_for(current_user.relationships.build) do |f| %>
+                    <%= hidden_field_tag :follow_id, user.id %>
+                    <%= f.submit 'Follow', class: 'btn btn-primary btn-block' %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </th>
+            <th>
+              <%= link_to "show", user_path(user) %>
+            </th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

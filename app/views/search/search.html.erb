@@ -1,0 +1,46 @@
+<div class="col-xs-12">
+	<table class="table">
+		<% if @model == 'user' %>
+			<thead>
+				<tr>
+					<th>image</th>
+					<th>name</th>
+					<th>follows</th>
+					<th>followers</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+			<% @datas.each do |user| %>
+				<tr>
+					<td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></td>
+					<td><%= user.name %></td>
+					<td><%= user.followed.count %></td>
+					<td><%= user.follower.count %></td>
+					<td><%= link_to 'Show', user %></td>
+			    </tr>
+			<% end %>
+		<% else %>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Opinion</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+			<% @datas.each do |book| %>
+				<tr>
+					<td>
+						<%= link_to(book.user) do %>
+						<%= attachment_image_tag(book.user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
+						<% end %>
+					</td>
+					<td><%= book.title %></td>
+					<td><%= book.body %></td>
+					<td><%= link_to 'Show', book_path(book.id) %></td>
+			    </tr>
+			<% end %>
+		<% end %>
+
+	</table>
+</div>
